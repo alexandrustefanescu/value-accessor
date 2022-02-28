@@ -1,0 +1,89 @@
+<!-- HEADER WITH FEEDBACK ICON -->
+<header class="header">
+  <mat-toolbar color="primary">
+    <button (click)="feedback(2000, 'I am glad that you like it!', 'LOVE')" mat-icon-button color="warn">
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <span>Angular Value Accessor</span>
+  </mat-toolbar>
+</header>
+
+<!-- FORM Block-->
+<form 
+  class="form center"
+  autocomplete="off"
+  *ngIf="reactiveForm"
+  [formGroup]="reactiveForm"
+  (ngSubmit)="submitValues()"
+>
+  <!-- Input Component -->
+  <app-input 
+    [parentForm]="reactiveForm"
+    fieldName="formInput"
+    label="Input field"
+    [formControl]="formInput"
+  ></app-input>
+
+  <!-- Dropdown Component -->
+  <app-dropdown
+    [parentForm]="reactiveForm"
+    fieldName="formDropdown"
+    label="Dropdown List"
+    [formControl]="formDropdown"
+  ></app-dropdown>
+
+  <!-- Password Field (defined in ReactiveForm Component)-->
+  <div class="parent-form">
+    <p>ReactiveForm Component</p>
+    <mat-form-field appearance="fill">
+      <mat-label>
+        {{ passwordLabel }}
+      </mat-label>
+      <input 
+        matInput
+        [formControl]="formPassword" 
+        [type]="passwordStatus ? 'password' : 'text'"
+      >
+      <button 
+        mat-icon-button 
+        matSuffix 
+        (click)="passwordStatus = !passwordStatus"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="passwordStatus"
+      >
+        <mat-icon>
+          {{ passwordStatus ? 'visibility_off' : 'visibility' }}
+        </mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+
+  <!-- Textarea Field (defined in ReactiveForm Component)-->
+  <div class="parent-form">
+    <p>ReactiveForm Component</p>
+    <mat-form-field appearance="fill" color="primary" hintLabel="Max 250 characters">
+      <mat-label>{{ textareaLabel }}</mat-label>
+      <textarea matInput [formControl]="formTextarea" maxlength="250"></textarea>
+      <mat-hint align="end">{{ formTextarea.value?.length || 0 }} / 250</mat-hint>
+    </mat-form-field>
+  </div>
+
+  <footer>
+    <button
+      [disabled]="reactiveForm.invalid"
+      mat-raised-button
+      class="formBtn"
+      color="primary"
+      (click)="feedback(2000, 'You have successfully submitted the form!', 'SUCCESS')"
+    >
+      Submit
+    </button>
+  
+    <p
+      *ngIf="reactiveForm.invalid" 
+      class="warning"
+    >
+      {{ reactiveFormError }}
+    </p>
+  </footer>
+</form>

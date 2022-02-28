@@ -1,0 +1,17 @@
+<div class="child-form">
+  <p>Child Component</p>
+  <mat-form-field appearance="fill">
+    <mat-label>{{ label }}</mat-label>
+    <mat-select>
+      <mat-option
+        *ngFor="let option of optionsList"
+        [value]="'option.label'"
+        [disabled]="isDisabled"
+        (input)="onChange($event)"
+        (blur)="touched()"
+      > 
+        {{ option.label }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

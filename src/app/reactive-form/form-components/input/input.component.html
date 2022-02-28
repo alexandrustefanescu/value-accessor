@@ -1,0 +1,15 @@
+<div class="child-form">
+  <p>Child Component</p>
+  <mat-form-field appearance="fill">
+    <mat-label>{{ label }}</mat-label>
+    <input 
+      matInput 
+      [id]="fieldName"
+      [name]="fieldName"
+      [value]="value"
+      [disabled]="isDisabled"
+      (input)="onChange($event)"
+      (blur)="touched()"
+    >
+  </mat-form-field>
+</div>
