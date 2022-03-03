@@ -1,10 +1,29 @@
 <!-- HEADER WITH FEEDBACK ICON -->
 <header class="header">
   <mat-toolbar color="primary">
-    <button (click)="feedback(2000, 'I am glad that you like it!', 'LOVE')" mat-icon-button color="warn">
-      <mat-icon>favorite</mat-icon>
+    <button 
+      mat-button
+      (click)="toggleDebugInformation()"
+    >
+      <mat-icon>build</mat-icon>
     </button>
-    <span>Angular Value Accessor</span>
+
+    <div class="logo">
+      <button 
+        mat-icon-button 
+        color="warn"  
+        (click)="feedback(2000, 'I am glad that you like it!', 'LOVE')" 
+      >
+        <mat-icon>favorite</mat-icon>
+      </button>
+      <span>Angular Value Accessor</span>
+    </div>
+
+    <div class="info">
+      <button mat-button (click)="showInformation()">
+        <mat-icon>info</mat-icon>
+      </button>
+    </div>
   </mat-toolbar>
 </header>
 
@@ -19,17 +38,13 @@
   <!-- Input Component -->
   <app-input 
     [parentForm]="reactiveForm"
-    fieldName="formInput"
     label="Input field"
-    [formControl]="formInput"
   ></app-input>
 
   <!-- Dropdown Component -->
   <app-dropdown
     [parentForm]="reactiveForm"
-    fieldName="formDropdown"
     label="Dropdown List"
-    [formControl]="formDropdown"
   ></app-dropdown>
 
   <!-- Password Field (defined in ReactiveForm Component)-->
@@ -41,10 +56,10 @@
       </mat-label>
       <input 
         matInput
-        [formControl]="formPassword" 
-        [type]="passwordStatus ? 'password' : 'text'"
+        placeholder="Type ..."
+        formControlName="password" 
       >
-      <button 
+      <button
         mat-icon-button 
         matSuffix 
         (click)="passwordStatus = !passwordStatus"
@@ -61,10 +76,20 @@
   <!-- Textarea Field (defined in ReactiveForm Component)-->
   <div class="parent-form">
     <p>ReactiveForm Component</p>
-    <mat-form-field appearance="fill" color="primary" hintLabel="Max 250 characters">
+    <mat-form-field 
+      appearance="fill" 
+      color="primary" 
+      [hintLabel]="hintLabel"
+    >
       <mat-label>{{ textareaLabel }}</mat-label>
-      <textarea matInput [formControl]="formTextarea" maxlength="250"></textarea>
-      <mat-hint align="end">{{ formTextarea.value?.length || 0 }} / 250</mat-hint>
+      <textarea 
+        matInput 
+        formControlName="textarea" 
+        placeholder="Type ..."
+        [maxlength]="textareaMaxLength"
+      >
+      </textarea>
+      <mat-hint align="end">{{ textarea.value?.length || 0 }} / 250</mat-hint>
     </mat-form-field>
   </div>
 
@@ -87,3 +112,14 @@
     </p>
   </footer>
 </form>
+
+<div
+  class="debug"
+  *ngIf="debugBtnStatus"
+  style="text-align: center;"
+>
+  <h2>Debug Tool</h2>
+  <p>
+    {{ reactiveForm.value | json }}
+  </p>
+</div>
