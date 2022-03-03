@@ -1,15 +1,15 @@
-<div class="child-form">
+<div class="child-form" [formGroup]="parentForm">
   <p>Child Component</p>
   <mat-form-field appearance="fill">
     <mat-label>{{ label }}</mat-label>
     <input 
       matInput 
-      [id]="fieldName"
-      [name]="fieldName"
+      formControlName="input"
       [value]="value"
       [disabled]="isDisabled"
       (input)="onChange($event)"
       (blur)="touched()"
+      placeholder="Type ..."
     >
   </mat-form-field>
 </div>

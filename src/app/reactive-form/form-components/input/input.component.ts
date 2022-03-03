@@ -1,28 +1,25 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, forwardRef, Input } from '@angular/core';
+import { ControlValueAccessor, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss'],
   // This part must always be provided in the component to be able to use the NG-VALUE-ACCESSOR
-  providers: [
-    {
+  providers: [{
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => InputComponent),
       multi: true,
-    }
-  ],
+  }]
 })
 export class InputComponent implements ControlValueAccessor {
   // in Angular 12+ we MUST initialize a variable with value so we use ! when we just declare them
   @Input() parentForm!: FormGroup;
-  @Input() fieldName!: string;
   @Input() label!: string;
 
   value!: string;
-  changed!: (value: string) => void;
-  touched!: () => void;
+  changed: (value: string) => void = Function;
+  touched: () => void = Function;
   isDisabled!: boolean;
   
   constructor() { }
