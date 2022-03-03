@@ -1,14 +1,15 @@
-<div class="child-form">
+<div class="child-form" [formGroup]="parentForm">
   <p>Child Component</p>
   <mat-form-field appearance="fill">
     <mat-label>{{ label }}</mat-label>
-    <mat-select>
+    <mat-select 
+      formArrayName="dropdown" 
+      placeholder="label"
+    >
       <mat-option
         *ngFor="let option of optionsList"
-        [value]="'option.label'"
-        [disabled]="isDisabled"
-        (input)="onChange($event)"
-        (blur)="touched()"
+        [value]="option.label"
+        (click)="selectOption(option.label, option.value)"
       > 
         {{ option.label }}
       </mat-option>
